@@ -5,5 +5,6 @@ dotenv.config();
 const uri = process.env.URI;
 
 const mongoclient = new MongoClient(uri);
+const collection = mongoclient.db("football").collection("player");
 
-module.exports = { mongoclient };
+module.exports = { mongoclient, collection };

@@ -1,6 +1,6 @@
 const express = require("express");
 const morgan = require("morgan");
-const { mongoclient } = require("./dataSource");
+const { mongoclient, collection } = require("./dataSource");
 
 const app = express();
 const PORT = 8000;
@@ -18,7 +18,6 @@ mongoclient
   });
 
 app.get("/player", (req, res) => {
-  const collection = mongoclient.db("football").collection("player");
   const name = req.body.name;
   const query = { name: name };
   collection.findOne(query).then((result) => {
@@ -27,7 +26,6 @@ app.get("/player", (req, res) => {
 });
 
 app.post("/player", (req, res) => {
-  const collection = mongoclient.db("football").collection("player");
   const name = req.body.name;
   const team = req.body.team;
   const nationality = req.body.nationality;
@@ -38,7 +36,6 @@ app.post("/player", (req, res) => {
 });
 
 app.patch("/player", (req, res) => {
-  const collection = mongoclient.db("football").collection("player");
   const oldName = req.body.oldName;
   const oldTeam = req.body.oldTeam;
   const newName = req.body.newName;
@@ -56,7 +53,6 @@ app.patch("/player", (req, res) => {
 });
 
 app.delete("/player", (req, res) => {
-  const collection = mongoclient.db("football").collection("player");
   const name = req.body.name;
   const query = { name: name };
   collection.deleteOne(query).then(() => {
